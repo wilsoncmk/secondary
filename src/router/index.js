@@ -11,31 +11,25 @@ router.map({
     '/': {
         name: 'index',
         component: (resolve) => {
-            require(['../views/index/list.vue'], resolve)
+            require(['../views/index/secondaryList/secondaryList.vue'], resolve)
         }
     },
-    '/themes': {
-        name: 'themes',
+    '/detail/:itemId': {
+        name: 'detail',
         component: (resolve) => {
-            require(['../views/index/themes.vue'], resolve)
+            require(['../views/index/itemDetail/itemDetail.vue'], resolve)
         }
     },
-    '/themes/:id': {
-        name: 'theme-list',
+    '/release': {
+        name: 'release',
         component: (resolve) => {
-            require(['../views/index/themeList.vue'], resolve)
+            require(['../views/index/releaseItem/releaseItem.vue'], resolve)
         }
     },
-    '/news/:id': {
-        name: 'news',
+    '/my': {
+        name: 'my',
         component: (resolve) => {
-            require(['../views/index/news.vue'], resolve)
-        }
-    },
-    '/about/': {
-        name: 'about',
-        component: (resolve) => {
-            require(['../views/index/about.vue'], resolve)
+            require(['../views/index/my/my.vue'], resolve)
         }
     }
 })

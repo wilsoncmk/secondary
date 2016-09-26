@@ -1,0 +1,17 @@
+.my-wrapper{
+    margin-top:50px;
+    .list-block {
+        .item-title {
+            font-size: 16px;
+            .icon {
+                margin-right: 10px;
+            }
+        }
+    }
+    .empty-item-wrapper{
+        padding-top:100px;
+        text-align: center;
+        color:#777;
+        font-size:16px;
+    }
+}

@@ -1,0 +1,52 @@
+{
+  "result": {
+    "status": 200,
+    "message": "OK"
+  },
+  "data": [
+    {
+        "current_price":110,
+        "origin_price": 120,
+        "images":[],
+        "title":"",
+        "detail":"",
+        "category_id": "001",
+        "category_name": "自行车",
+        "release_time": "2016-06-09 17:36:50",
+        "telephone": "15201923099",
+        "qq": "1158343198",
+        "wechat": "hanghjkj",
+        "name":"wilson",
+        "gender":"MALE"
+    },{
+        "current_price":110,
+        "origin_price": 120,
+        "images":[],
+        "title":"",
+        "detail":"",
+        "category_id": "001",
+        "category_name": "自行车",
+        "release_time": "2016-06-09 17:36:50",
+        "telephone": "15201923099",
+        "qq": "1158343198",
+        "wechat": "hanghjkj",
+        "name":"wilson",
+        "gender":"MALE"
+    },{
+        "current_price":110,
+        "origin_price": 120,
+        "images":[],
+        "title":"",
+        "detail":"",
+        "category_id": "001",
+        "category_name": "自行车",
+        "release_time": "2016-06-09 17:36:50",
+        "telephone": "15201923099",
+        "qq": "1158343198",
+        "wechat": "hanghjkj",
+        "name":"wilson",
+        "gender":"MALE"
+    }
+  ]
+}
+

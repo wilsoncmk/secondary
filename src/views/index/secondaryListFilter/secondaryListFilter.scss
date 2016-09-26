@@ -1,0 +1,26 @@
+.secondary-filter-wrapper {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    background: #fff;
+    .selected-wrapper {
+        background: #28abfd;
+        font-weight: bold;
+        color: #fff;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+    }
+    .options-wrapper {
+        background: #f3faff;
+        color:#888;
+        text-align: center;
+        .option {
+            height: 40px;
+            line-height: 40px;
+        }
+    }
+    .hide {
+        display: none;
+    }
+}

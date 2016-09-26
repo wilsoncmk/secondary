@@ -1,0 +1,127 @@
+$color-border-grey: #e1e1e1;
+* {
+    padding: 0;
+    margin: 0;
+}
+body {
+    background-color: #F5F5F5;
+}
+.container {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}
+.bar {
+    background: #fff;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+}
+
+.sec-nav {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 10;
+    background: #fff;
+}
+
+.sec-list {
+    margin-top: 50px;
+}
+
+// 分割线及分辨率兼容相关
+.border-bottom,
+.border-top,
+.border-left,
+.border-right {
+    position: relative;
+}
+
+.border-top:before,
+.border-bottom:after,
+.border-left:before,
+.border-right:after {
+    content: "";
+    position: absolute;
+    font-size: 0;
+    line-height: 0;
+    background-color: $color-border-grey;
+}
+
+.border-bottom:after,
+.border-top:before {
+    width: 100%;
+    height: 1px;
+    left: 0;
+}
+
+.border-left:before,
+.border-right:after {
+    width: 1px;
+    height: 100%;
+    top: 0;
+}
+
+.border-top:before {
+    top: 0;
+    -webkit-transform-origin: center top;
+}
+
+.border-bottom:after {
+    bottom: 0;
+    -webkit-transform-origin: center bottom;
+}
+
+.border-left:before {
+    left: 0;
+    -webkit-transform-origin: left center;
+}
+
+.border-right:after {
+    right: 0;
+    -webkit-transform-origin: right center;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1),
+not all {
+    .border-top,.border-bottom,.border-left,.border-right{}
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+not all {
+    .border-top:before,
+    .border-bottom:after{
+        -webkit-transform: scaleY(.667);
+    }
+    .border-left:before,
+    .border-right:after {
+        -webkit-transform: scaleX(.667);
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+not all {
+    .border-top:before,
+    .border-bottom:after{
+        -webkit-transform: scaleY(.5);
+    }
+    .border-left:before,
+    .border-right:after {
+        -webkit-transform: scaleX(.5);
+    }
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3),
+not all {
+    .border-top:before,
+    .border-bottom:after{
+        -webkit-transform: scaleY(.33333);
+    }
+    .border-left:before,
+    .border-right:after {
+        -webkit-transform: scaleX(.33333);
+    }
+}

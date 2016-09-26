@@ -18,29 +18,26 @@
 </style>
 
 <template>
-    <section class="zhi-list">
-        <div class="list-date">{{date}}</div>
-        <cov-article v-for="data in articles" :data="data"></cov-article>  
+    <section class="secondary-item-list">
+        <secondary-item v-for="data in list" :data="data"></secondary-item>  
     </section>
 </template>
 
 <script>
-    import covArticle from './article.vue'
+    import secondaryItem from '../secondaryItem/secondaryItem.vue'
     export default {
         props: {
-            'articles': {
+            'list': {
                 type: Array,
                 required: true
-            },
-            date: {
-                type: String,
-                default () {
-                    return ''
-                }
             }
         },
         components: {
-            covArticle
+            secondaryItem
+        },
+        created () {
+            // console.log(this.props)
+            // console.log(this.articles)
         }
     }
 </script>

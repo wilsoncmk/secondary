@@ -1,29 +1,40 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {ACTION_TYPE} from './action'
 
 Vue.use(Vuex)
 
 const state = {
-    datePointer: {
-        value: '',
-        format: ''
-    },
-    days: [],
-    themes: []
+    lists: [],
+    myLists: []
 }
 
 const mutations = {
-    ['SET_ARTICLES'] (state, date, arr) {
-        state.days.push({
-            date: date,
-            articles: arr
+    [ACTION_TYPE.SET_ITEMS] (state, index, arr) {
+        state.lists.push({
+            index,
+            list: arr
         })
     },
-    ['SET_DATE_POINTER'] (state, value) {
-        state.datePointer = value
+    [ACTION_TYPE.SET_CATEGORY] (state, index, arr) {
+        state.lists = [];
+        state.lists.push({
+            index,
+            list: arr
+        })
     },
-    ['SET_THEMES'] (state, arr) {
-        state.themes = arr
+    [ACTION_TYPE.SET_MY_ITEMS] (state, index, arr) {
+        state.myLists.push({
+            index,
+            list: arr
+        })
+    },
+    [ACTION_TYPE.SET_MY_CATEGORY] (state, index, arr) {
+        state.myLists = [];
+        state.myLists.push({
+            index,
+            list: arr
+        })
     }
 }
 

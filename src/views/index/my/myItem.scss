@@ -1,0 +1,26 @@
+.my-item-wrapper {
+    .status-wrapper {
+        overflow: hidden;
+        padding: 5px 5px;
+        background:#fff;
+        .status-unstaled {
+            width: 80px;
+            height:30px;
+            float: right;
+            color: #fff;
+            background-color:#55bcfd;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 30px;
+        }
+        .status-staled {
+            width: 80px;
+            height:30px;
+            float: right;
+            color:#55bcfd;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 30px;
+        }
+    }
+}
