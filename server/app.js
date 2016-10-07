@@ -22,6 +22,6 @@ app.get('/readapi', api.requestApi)
 app.get('*', (req, res) => {res.sendFile(__dirname + '/public/index.html')})
 
 
-app.listen(80, () => {
-    console.log(`app is listening at port:80`)
+app.listen(8092, () => {
+    console.log(`app is listening at port:8092`)
 })

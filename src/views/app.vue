@@ -44,6 +44,7 @@ export default {
         progress
     },
     created () {
+        document.domain = 'ecnuhome.com';
         this.$progress.setHolder(this.vueProgress)
     },
     ready () {

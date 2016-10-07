@@ -22,7 +22,8 @@ import listLayout from './listLayout.vue';
 import secondaryListFilter from '../secondaryListFilter/secondaryListFilter.vue';
 import { setItems, setCategory } from '../../../vuex/index/action';
 import secondaryApi from '../../../schema/api/secondary';
-import usersApi from '../../../schema/api/users'
+import usersApi from '../../../schema/api/users';
+import user from '../../../common/utils/user';
 
 const loginInfo = {
     name: '闵行大活',
@@ -82,16 +83,22 @@ export default {
         },
         fetchList () {
             const _vue = this;
-            // this.$http.post(usersApi.login, loginInfo).then((res) => {
-            //     token = res.data.data.token;
-            //     if (window.localStorage) {
-            //         window.localStorage.setItem('ecnu_token', token);
-            //         this.getAll(_vue, {
-            //             token,
-            //             pagesize,
-            //             pageindex
-            //         });
-            //     }
+            this.$http.post(usersApi.login, loginInfo).then((res) => {
+                token = res.data.data.token;
+                if (window.localStorage) {
+                    window.localStorage.setItem('ecnu_token', token);
+                    this.getAll(_vue, {
+                        token,
+                        pagesize,
+                        pageindex
+                    });
+                }
+            });
+            // token = user.token;
+            // this.getAll(_vue, {
+            //     token,
+            //     pagesize,
+            //     pageindex
             // });
         },
         getAll (_vue, param) {

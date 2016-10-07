@@ -24,6 +24,7 @@
     "request": "^2.72.0",
     "tiny-emitter": "^1.1.0",
     "vue": "^1.0.18",
+    "vuex-router-sync": "^2.1.1",
     "webpack-zepto": "0.0.1",
     "weui": "^0.4.3",
     "zepto": "^1.2.0"
