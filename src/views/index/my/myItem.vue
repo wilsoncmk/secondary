@@ -9,13 +9,14 @@
 </template>
 <script>
     import './myItem.scss';
-    import { setAticles } from '../../../vuex/index/action'
+    import { setMyCategory } from '../../../vuex/index/action'
     import secondaryApi from '../../../schema/api/secondary';
     import secondaryItem from '../secondaryItem/secondaryItem.vue'
+    import user from '../../../common/utils/user';
     export default {
         vuex: {
             actions: {
-                setAticles
+                setMyCategory
             }
         },
         props: {
@@ -29,24 +30,25 @@
         },
         methods: {
             dealFinished () {
-                alert(123);// eslint-disable-line
+                $.weui.loading('数据加载中...');
                 this.$http.post(secondaryApi.update, {
-                    token: window.localStorage.getItem('ecnu_token'),
+                    token: user.token,
                     id: this.data.id,
                     openid: window.localStorage.getItem('ecnu_openid'),
                     state: '已出售'
                 }).then((response) => {
+                    $.weui.hideLoading();
                     this.getAll();
                 })
             },
             getAll () {
                 this.$http.post(secondaryApi.all, {
-                    token: window.localStorage.getItem('ecnu_token'),
+                    token: user.token,
                     openid: window.localStorage.getItem('ecnu_openid'),
                     state: '未出售'
                 }).then((response) => {
                     const res = response.data.data;
-                    this.setAticles(0, res);
+                    this.setMyCategory(0, res);
                 }, (response) => {
                 })
             }

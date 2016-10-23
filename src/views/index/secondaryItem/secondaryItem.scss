@@ -28,7 +28,6 @@ body {
             float: left;
             width: 30px;
             height: 30px;
-            background: url('./img/user.jpg') center no-repeat;
             background-size: cover;
             // background-size: auto 100%;
             border-radius: 50%;
@@ -39,6 +38,12 @@ body {
             margin-left: 5px;
             .user-name {
                 font-size: 15px;
+            }
+            .male {
+                color: #2891ad;;
+            }
+            .female {
+                color: #ff9d9d;;
             }
             .release-time {
                 font-size: 11px;
@@ -89,14 +94,12 @@ body {
 
 .bike-list {
     .item-image {
-        background: url('./img/bike.jpg') center no-repeat;
         background-size: auto 100%;
     }
 }
 
 .book-list {
     .item-image {
-        background: url('./img/book.jpg') center no-repeat;
         background-size: auto 100%;
     }
 }

@@ -57,7 +57,7 @@ app.use(hotMiddleware)
 
 // serve pure static assets
 var staticPath = path.join(config.build.assetsPublicPath, config.build.assetsSubDirectory)
-app.use(staticPath, express.static('./' + config.build.assetsSubDirectory))
+// app.use(staticPath, express.static('./' + config.build.assetsSubDirectory))
 
 app.get('/imagebox', imagebox.upload)
 app.get('/readapi', api.requestApi)

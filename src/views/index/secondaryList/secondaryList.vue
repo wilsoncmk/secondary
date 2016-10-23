@@ -2,21 +2,13 @@
     <div class="secondary-list">
         <secondary-list-filter :optionchanged="handleCategoryChanged">
         </secondary-list-filter>
-        <scroll  :bottom-height="btnHeight"  
-                 :top-height="topHeight" 
-                 :use-pullup="true" 
-                 @pullup:loading="upLoading" 
-                 @pullup:complete="upDone">
-                 <ul>
-                     <list-layout :list="value.list" :index="value.index" v-for="(key, value) of lists"></list-layout>
-                 </ul>
-                
-        </scroll>
+        <list-layout :list="value.list" :index="value.index" v-for="(key, value) of lists"></list-layout>
+        <div class="load-more" @click="getMore()" v-if="!loadFinish">加载更多</div>
+        <div class="load-finish" v-else>只有这么多啦~</div>
     </div>
 </template>
 
 <script>
-import scroll from '../../../common/iscroll/scroll.vue';
 import './secondaryList.scss'
 import listLayout from './listLayout.vue';
 import secondaryListFilter from '../secondaryListFilter/secondaryListFilter.vue';
@@ -25,12 +17,8 @@ import secondaryApi from '../../../schema/api/secondary';
 import usersApi from '../../../schema/api/users';
 import user from '../../../common/utils/user';
 
-const loginInfo = {
-    name: '闵行大活',
-    password: '123456'
-}
-const pagesize = 3;
-let pageindex = 0;
+const pagesize = 5;
+let pageindex = null;
 let token = null;
 let uuid = null;
 
@@ -48,64 +36,51 @@ export default {
         return {
             curTab: 'bike',
             btnHeight: '40px',
-            topHeight: '40px'
+            topHeight: '40px',
+            loadFinish: false
         }
     },
     components: {
         listLayout,
-        scroll,
         secondaryListFilter
     },
     created () {
-        this.curTab = 'bike';
-        setTimeout(() => {
-            this.$broadcast('scroll-reset', 'container');
-        }, 2000)
-        this.fetchList();
+        this.curTab = '全部';
+        this.loadmore = false;
+        pageindex = 0;
+        token = user.token;
+        this.handleCategoryChanged(this.curTab);
     },
     methods: {
         upLoading (_uuid) {
             uuid = _uuid;
-            console.log('pullup');
             this.getNextPage().then((response) => {
                 this.setItems(pageindex, response.data.data);
-                if ((pageindex + 1) * pagesize < response.data.data[0].total) {
+                if ( (pageindex + 1) * pagesize < response.data.data[0].total){
                     pageindex++;
-                    this.$broadcast('pullup:reset', uuid)
                 } else {
-                    this.$broadcast('pullup:done', uuid)
-                    // this.$broadcast('pullup:reset', uuid)
                 }
             });
         },
         upDone () {
-            console.log('done');
         },
-        fetchList () {
-            const _vue = this;
-            this.$http.post(usersApi.login, loginInfo).then((res) => {
-                token = res.data.data.token;
-                if (window.localStorage) {
-                    window.localStorage.setItem('ecnu_token', token);
-                    this.getAll(_vue, {
-                        token,
-                        pagesize,
-                        pageindex
-                    });
-                }
-            });
-            // token = user.token;
-            // this.getAll(_vue, {
-            //     token,
-            //     pagesize,
-            //     pageindex
-            // });
-        },
-        getAll (_vue, param) {
-            _vue.$http.post(secondaryApi.all, param).then((response) => {
+        getMore () {
+            const param = {
+                token,
+                pagesize,
+                pageindex,
+                category: this.curTab === '全部' ? undefined : this.curTab
+            };
+            this.loadmore = true;
+            $.weui.loading('数据加载中...');
+            this.$http.post(secondaryApi.all, param).then((response) => {
                 this.setItems(pageindex, response.data.data);
-                if ((pageindex + 1) * pagesize < response.data.data[0].total) {
+                $.weui.hideLoading();
+                this.loadmore = false;
+                if (response.data.data.length> 0 &&(pageindex + 1) * pagesize < response.data.data[0].total) {
                     pageindex++;
+                } else {
+                    this.loadFinish = true;
                 }
             });
         },
@@ -117,17 +92,26 @@ export default {
             })
         },
         handleCategoryChanged (cate) {
+            this.loadFinish = false;
+            this.curTab = cate;
+            console.log('vshngher')
             this.$broadcast('scroll-reset', uuid)
             pageindex = 0;
+            $.weui.loading('数据加载中...');
             this.$http.post(secondaryApi.all, {
                 token,
                 pagesize,
                 pageindex,
                 category: cate === '全部' ? undefined : cate
             }).then((response) => {
+                $.weui.hideLoading();
                 this.setCategory(pageindex, response.data.data);
-                if ((pageindex + 1) * pagesize < response.data.data[0].total) {
+                if (response.data.data.length> 0 &&(pageindex + 1) * pagesize < response.data.data[0].total) {
                     pageindex++;
+                } else {
+                    console.log(123)
+                    this.loadFinish = true;
+                     console.log(this.loadFinish)
                 }
             });
         }

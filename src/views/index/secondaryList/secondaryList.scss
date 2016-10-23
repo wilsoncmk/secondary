@@ -1,5 +1,9 @@
 .secondary-list {
     padding-bottom: 60px;
+    margin-top:50px;
+    .secondary-item-list {
+        
+    }
     .list-container {
         padding-bottom: 20px;
     }
@@ -51,6 +55,22 @@
     }
     .more-btn:hover {
         background-color: #455569;
+    }
+    .load-more {
+        background-color:#fff;
+        color:#999;
+        text-align: center;
+        height:30px;
+        line-height:30px;
+        margin-top:10px;
+    }
+
+    .load-finish {
+        text-align: center;
+        color:#999;
+        height:30px;
+        line-height:30px;
+        margin-top:10px;
     }
 }
 

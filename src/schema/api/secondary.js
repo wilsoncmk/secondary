@@ -7,6 +7,4 @@ const secondaryApi = {
     update: 'secondary/update'
 }
 
-console.log(getCompleteUrl(secondaryApi));
-
 export default getCompleteUrl(secondaryApi);

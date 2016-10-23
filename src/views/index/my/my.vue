@@ -9,7 +9,8 @@
         <div class="list-container">
             <list-layout :list="value.list" :index="value.index" v-for="(key, value) of lists"></list-layout>
         </div>
-        <div class="empty-item-wrapper" v-if="emptyList"><span>项目为空哦~</span></div>
+        <div class="load-more" @click="getMore()" v-if="!emptyList">加载更多</div>
+        <div class="load-finish" v-else>只有这么多啦~</div>
     </div>
 </template>
 
@@ -18,15 +19,27 @@ import './my.scss'
 import listLayout from './listLayout.vue'
 import { setMyItems, setMyCategory } from '../../../vuex/index/action'
 import secondaryApi from '../../../schema/api/secondary';
+import user from '../../../common/utils/user';
 import usersApi from '../../../schema/api/users'
 
 const loginInfo = {
     name: '闵行大活',
     password: '123456'
 }
-const pageSize = 5;
-let pageIndex = 0;
+const pagesize = 5;
+let pageindex = 0;
 let token = null;
+const status = {
+    saled: '已出售',
+    unsaled: '未出售'
+}
+const param = {
+    state: '未出售',
+    openid: user.openid,
+    token: user.token,
+    pagesize,
+    pageindex
+};
 
 export default {
     vuex: {
@@ -41,7 +54,7 @@ export default {
     data () {
         return {
             curTab: 'unsaled',
-            emptyList: true
+            emptyList: false
         }
     },
     components: {
@@ -52,57 +65,44 @@ export default {
     },
     methods: {
         fetchList () {
-            const _vue = this;
-            this.$http.post(usersApi.login, loginInfo).then((res) => {
-                token = res.data.data.token;
-                if (window.localStorage) {
-                    window.localStorage.setItem('ecnu_token', token);
-                    this.getAll(_vue, {
-                        token,
-                        pageSize,
-                        pageIndex,
-                        state: '未出售',
-                        openid: window.localStorage.getItem('ecnu_openid')
-                    }, 'unsaled');
-                }
-            });
+            token = user.token;
+            this.changeCategory('unsaled');
         },
-        getAll (_vue, param, cate) {
-            _vue.$http.post(secondaryApi.all, param).then((response) => {
+        getMore () {
+            this.emptyList = false;
+            Object.assign(param, {
+                pageindex
+            });
+            $.weui.loading('数据加载中...');
+            this.$http.post(secondaryApi.all, param).then((response) => {
                 const res = response.data.data;
-                this.setMyCategory(pageIndex, res);
-                this.curTab = cate;
-                if (pageIndex < res.total) {
-                    pageIndex++;
-                }
-                if (res.length === 0) {
-                    this.emptyList = true;
+                this.setMyItems(pageindex, res);
+                $.weui.hideLoading();
+                if (res.length > 0 && (pageindex + 1) * pagesize < res[0].total) {
+                    pageindex++;
                 } else {
-                    this.emptyList = false;
+                    this.emptyList = true;
                 }
             })
         },
         changeCategory (cate) {
-            if (cate === 'unsaled') {
-                const _vue = this;
-                this.getAll(_vue, {
-                    token,
-                    pageSize,
-                    pageIndex,
-                    openid: window.localStorage.getItem('ecnu_openid'),
-                    state: '未出售'
-                }, cate);
-                
-            } else if (cate === 'saled') {
-                const _vue = this;
-                this.getAll(_vue, {
-                    token,
-                    pageSize,
-                    pageIndex,
-                    openid: window.localStorage.getItem('ecnu_openid'),
-                    state: '已出售'
-                }, cate);
-            }
+            this.curTab = cate;
+            pageindex = 0;
+            Object.assign(param, {
+                state: status[cate],
+                pageindex: 0
+            });
+            $.weui.loading('数据加载中...');
+            this.$http.post(secondaryApi.all, param).then((response) => {
+                const res = response.data.data;
+                this.setMyCategory(pageindex, res);
+                $.weui.hideLoading();
+                if (res.length > 0 && (pageindex + 1) * pagesize < res[0].total) {
+                    pageindex++;
+                } else {
+                    this.emptyList = true;
+                }
+            })
         }
     }
 }

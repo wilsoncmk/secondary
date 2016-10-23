@@ -11,7 +11,7 @@
                     <span class="cur-price">&yen;{{data.current_price}}</span>
                     <span class="origin-price">{{data.origin_price}}</span>
                 </div>
-                <div class="user-image"></div>
+                <div class="user-image" v-bind:style="getHeadImage(data.headimgurl)"></div>
                 <div class="user-name-wrapper">
                     <span class="user-name">{{data.nickname || 'XXX'}}</span>
                     <br/>
@@ -44,6 +44,7 @@
 <script>
     import { getPicUrl } from '../../../common/utils/image'
     import secondaryApi from '../../../schema/api/secondary';
+    import user from '../../../common/utils/user';
     import './itemDetail.scss'
     export default {
         data () {
@@ -52,10 +53,12 @@
             };
         },
         created () {
+            $.weui.loading('数据加载中...');
             this.$http.post(secondaryApi.all, {
-                token: window.localStorage.getItem('ecnu_token'),
+                token: user.token,
                 id: this.$route.params.itemId
             }).then((response) => {
+                $.weui.hideLoading();
                 this.data = response.data.data[0]
             });
         },
@@ -63,11 +66,11 @@
             getPicStyle (url) {
                 return getPicUrl(url);
             },
+            getHeadImage (url) {
+                return `background-image:url(${url})`;
+            },
             goback () {
-                this.$route.router.go({
-                    name: 'index'
-                });
-            }
+                window.history.back();            }
         }
     }
 </script>

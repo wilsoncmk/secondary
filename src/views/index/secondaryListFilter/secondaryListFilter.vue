@@ -59,8 +59,6 @@
             }
         },
         created () {
-            console.log(123)
-            console.log(this.optionchanged)
             // this.$covImg(this, this.data.img, cloudSrc => {
             //     this.cloudSrc = cloudSrc
             // })

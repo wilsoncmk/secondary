@@ -28,7 +28,6 @@
                     </li>
                 </ul>
             </div>
-        <div class="weui_cells_title">上传</div>
         <div class="weui_cells weui_cells_form">
             <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
@@ -90,9 +89,20 @@
                     <div class="item-content">
                         <div class="item-media"><i class="icon icon-form-password"></i></div>
                         <div class="item-inner">
-                            <div class="item-title label">联系方式</div>
+                            <div class="item-title label">手机</div>
                             <div class="item-input">
-                                <input type="number" placeholder="请留下你得联系方式" class="" v-model="telephone">
+                                <input type="number" placeholder="请留下你的手机" class="" v-model="telephone">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                  <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="icon icon-form-password"></i></div>
+                        <div class="item-inner">
+                            <div class="item-title label">微信</div>
+                            <div class="item-input">
+                                <input type="number" placeholder="请留下你的微信" class="" v-model="wechat">
                             </div>
                         </div>
                     </div>
@@ -104,7 +114,7 @@
                             <div class="item-title label">分类</div>
                             <div class="item-input">
                                 <select v-model="category">
-                                    <option selected value="自行车">自行车</option>
+                                    <option selected value="生活用品">生活用品</option>
                                     <option value="书籍">书籍</option>
                                     <option value="生活用品">生活用品</option>
                                     <option value="数码">数码</option>
@@ -126,11 +136,12 @@
     import _ from 'lodash'
     import './releaseItem.scss'
     import secondaryApi from '../../../schema/api/secondary';
+    import user from '../../../common/utils/user';
     export default {
         data () {
             return {
-                title: 'bike',
-                telephone: '123',
+                title: '',
+                telephone: '',
                 price: '11',
                 preImages: [],
                 numberOfimages: 0,
@@ -153,9 +164,11 @@
                     title: this.title,
                     content: this.content,
                     category: this.category,
+                    wechat: this.wechat,
                     telephone: this.telephone,
-                    token: window.localStorage.getItem('ecnu_token')
+                    token: user.token
                 }
+                $.weui.loading('数据加载中...');
                 _vue.$http.post(secondaryApi.new, param).then((response) => {
                     if (window.localStorage) {
                         window.localStorage.setItem('ecnu_openid', response.data.data.openid);
@@ -164,6 +177,7 @@
                     if (this.files) {
                         this.releaseImage();
                     } else {
+                        $.weui.hideLoading();
                         this.$route.router.go({name: 'index'})
                     }
                   // success callback
@@ -176,12 +190,12 @@
                 _.forEach(this.files, (f, i) => {
                     formData.append('file' + i, f);
                 })
-                // formData.append('files', this.files);
-                formData.append('token', window.localStorage.getItem('ecnu_token'));
+
+                formData.append('token', user.token);
                 formData.append('id', window.localStorage.getItem('ecnu_id'));
                 formData.append('openid', window.localStorage.getItem('ecnu_openid'));
                 this.$http.post(secondaryApi.upload, formData).then((response) => {
-                    console.log(response.data.data)
+                    $.weui.hideLoading();
                     this.$route.router.go({name: 'index'})
                   // success callback
                 }, (response) => {
@@ -203,7 +217,6 @@
                     const image = new Image();// eslint-disable-line
                     image.src = reader.result;
                     this.preImages.push(reader.result);
-                    console.log(this.preImages)
                 };
                 reader.readAsDataURL(file);
             }

@@ -149,7 +149,6 @@
             if (that.usePulldown) {
                     if (this.y > pulldownOffset+pullThreshold && !containClass(pulldown.element,'vue-iscroll-pulldown-down')) {
                         pulldown.release();
-                        console.log('call release')
                         this.scrollBy(0,-pulldownOffset, 0);// Adjust scrolling position to match the change in pullDownEl's margin-top
                     } else if (this.y < 0 && containClass(pulldown.element,'vue-iscroll-pulldown-down')) { // User changes his mind...
                         pulldown.pull();
@@ -173,12 +172,10 @@
 
         that._scroller.on('scrollEnd',function() {
                 if ( pulldown && containClass(pulldown.element,'vue-iscroll-pulldown-down')) {
-                    console.log('scroll end')
                     pulldown.loading();
                 }
 
                 if ( pullup && containClass(pullup.element,'vue-iscroll-pullup-up')) {
-                    console.log('scroll end');console.log(this)
                     //this.scrollBy(0,-pullupOffset, 0);
                     pullup.loading();
                     
@@ -195,9 +192,7 @@
 
         methods: {
             reset(timeout=0){
-                console.log('reset');console.log(this._scroller);
                 this._scroller&&setTimeout(()=>{
-                    console.log('refresh')
                     this._scroller.refresh();
                 },timeout);
             },
@@ -209,7 +204,6 @@
         },
         events:{
             'scroll-reset': function(uuid){
-                console.log('reset event')
                 this.reset();
             },
             //下拉刷新，重置iscroll
