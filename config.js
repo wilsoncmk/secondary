@@ -11,7 +11,7 @@ module.exports = {
         productionSourceMap: false
     },
     dev: {
-        port: 8090,
+        port: 8091,
         proxyTable: {},
         assetsPublicPath: '/'
     }

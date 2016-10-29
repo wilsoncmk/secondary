@@ -14,7 +14,6 @@ import listLayout from './listLayout.vue';
 import secondaryListFilter from '../secondaryListFilter/secondaryListFilter.vue';
 import { setItems, setCategory } from '../../../vuex/index/action';
 import secondaryApi from '../../../schema/api/secondary';
-import usersApi from '../../../schema/api/users';
 import user from '../../../common/utils/user';
 
 const pagesize = 5;

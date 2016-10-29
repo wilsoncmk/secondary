@@ -14,6 +14,12 @@ router.map({
             require(['../views/index/secondaryList/secondaryList.vue'], resolve)
         }
     },
+    '/wx/secondary/public/index': {
+        name: 'index',
+        component: (resolve) => {
+            require(['../views/index/secondaryList/secondaryList.vue'], resolve)
+        }
+    },
     '/detail/:itemId': {
         name: 'detail',
         component: (resolve) => {
