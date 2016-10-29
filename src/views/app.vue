@@ -30,6 +30,17 @@ export default {
         }
     },
     created () {
+        console.log('create app');
+        const user = {};
+        const query = document.location.search
+        const reg = /\?user=(.*)&openid=(.*)/
+        if (reg.test(query)) {
+            const match = query.match(reg);
+            user.token = match[1];
+            user.openid = match[2];
+            window.user = user;
+            console.log(window.user)
+        }
     },
     ready () {
     },
