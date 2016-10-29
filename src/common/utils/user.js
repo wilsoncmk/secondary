@@ -1,13 +1,18 @@
 
 
-// user.openid = window.localStorage.getItem('openid');
-// user.token = window.localStorage.getItem('token');
-// user.nickname = window.localStorage.getItem('nickname');
-// user.sex = window.localStorage.getItem('sex');
-// user.headimgurl = window.localStorage.getItem('headimgurl');
-// user.token_time = window.localStorage.getItem('token_time');
-// user.token='dadc78993ff9be68f205655c38ab2fad67fcbcf0';
+const user = {};
+const query = document.location.search
+const reg = /\?user=(.*)&openid=(.*)/
+console.log('i m here')
+if (reg.test(query)) {
+    const match = query.match(reg);
+    user.token = match[1];
+    user.openid = match[2];
+    window.user = user;
+    console.log('i m here in user.js')
+    console.log(window.user)
+}
 
 
-export default window.user;
+export default user;
 
